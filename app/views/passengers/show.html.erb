@@ -1,0 +1,18 @@
+<h1>Passenger#show</h1>
+<p>Find me in app/views/passenger/show.html.erb</p>
+
+
+<br>
+<h2>Order List</h2>
+<h3>・Orders in Progress</h3>
+<% @orders.each do |order| %>
+  <%= link_to(order.date_time, order_path(order.id)) %>
+  <%= link_to(order.location, order_path(order.id)) %>
+<% end %>
+<br>
+<h3>・Past Orders</h3>
+<% @past_orders.each do |past_order| %>
+  <%= link_to(order.date_time, order_path(order.id)) %>
+  <%= link_to(order.location, order_path(order.id)) %>
+  <%= link_to(order.driver.name, driver_show_path(order.driver.id)) %>
+<% end %>

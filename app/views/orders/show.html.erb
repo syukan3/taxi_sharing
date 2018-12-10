@@ -1,4 +1,3 @@
-<p id="notice"><%= notice %></p>
 
 <p>
   <strong>Location:</strong>
@@ -12,12 +11,14 @@
 
 <p>
   <strong>Passenger:</strong>
-  <%= @order.passenger_id %>
+  <%= @order.passenger.name %>
 </p>
 
 <p>
   <strong>Driver:</strong>
-  <%= @order.driver_id %>
+  <% if @order.driver_id %>
+    <%= @order.driver.name %>
+  <% end %>
 </p>
 
 <%= link_to 'Edit', edit_order_path(@order) %> |

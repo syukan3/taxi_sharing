@@ -1,2 +1,58 @@
 <h1>Home#top</h1>
 <p>Find me in app/views/home/top.html.erb</p>
+
+<script type="text/javascript">
+    function initMap() {
+
+        var test ={lat: 35.681167, lng: 139.767052};
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 15,
+            center: test
+        });
+        var transitLayer = new google.maps.TransitLayer();
+        transitLayer.setMap(map);
+
+        var contentString = '住所：';
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+
+        var marker = new google.maps.Marker({
+            position: test,
+            map: map,
+            title: contentString
+        });
+
+        marker.addListener('click', function() {
+            infowindow.open(map, marker);
+        });
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= Rails.application.credentials.google_map_key %>&callback=initMap">
+</script>
+
+
+
+
+
+<p>
+  <strong>Address:</strong>
+</p>
+
+<p>
+  <strong>Latitude:</strong>
+</p>
+
+<p>
+  <strong>Longitude:</strong>
+</p>
+
+<style type="text/css">
+  #map { height: 400px;
+    margin-left:auto;
+    margin-right:auto;
+    text-align:left;
+    width: 80%;}
+</style>
+<div id="map"></div>
