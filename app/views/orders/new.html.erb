@@ -9,6 +9,7 @@
 <div id="map"></div>
 
 <script type="text/javascript">
+    var markers = [];
     function initMap() {
       if (!navigator.geolocation) {
         alert('Geolocation not supported');
@@ -26,15 +27,24 @@
 
         var geocoder = new google.maps.Geocoder();
 
-        map.addListener( "dragend", function ( argument ) {
+        map.addListener( "center_changed", function ( argument ) {
           var centerPosition = map.getCenter();
           // document.getElementById('center_lan').value = centerPosition.lat();
           // document.getElementById('center_lng').value = centerPosition.lng();
+
+          for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(null);
+          }
+
           marker = new google.maps.Marker({
             position: centerPosition,
             map: map
           });
+          markers.push(marker);
+        });
 
+        map.addListener( "dragend", function ( argument ) {
+          var centerPosition = map.getCenter();
           geocoder.geocode({
             location: centerPosition
           }, function(results, status) {
@@ -50,7 +60,6 @@
               return;
             }
           });
-
         });
       }, function() {
         alert('Geolocation failed!');
