@@ -1,5 +1,12 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
+  
+  def contract
+    @order = Order.find_by(id: params[:id])
+    @order.driver_id = current_driver.id
+    @order.save
+    # redirect_to("/users/#{@user.id}")
+  end
 
   # GET /orders
   # GET /orders.json

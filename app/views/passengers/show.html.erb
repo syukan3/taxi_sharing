@@ -8,11 +8,13 @@
 <% @orders.each do |order| %>
   <%= link_to(order.date_time, order_path(order.id)) %>
   <%= link_to(order.location, order_path(order.id)) %>
+  <br>
 <% end %>
 <br>
 <h3>・Past Orders</h3>
 <% @past_orders.each do |past_order| %>
-  <%= link_to(order.date_time, order_path(order.id)) %>
-  <%= link_to(order.location, order_path(order.id)) %>
-  <%= link_to(order.driver.name, driver_show_path(order.driver.id)) %>
+  <%= link_to(past_order.date_time, order_path(past_order.id)) %>
+  <%= link_to(past_order.location, order_path(past_order.id)) %>
+  <%= link_to(past_order.driver.name, driver_show_path(past_order.driver.id)) %>
+  <br>
 <% end %>

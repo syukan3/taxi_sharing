@@ -1,7 +1,6 @@
 
 <p>
-  <strong>Location:</strong>
-  <%= @order.location %>
+  <strong>Location:</strong><div id="orderLocation"><%= @order.location %></div>
 </p>
 
 <p>
@@ -21,5 +20,61 @@
   <% end %>
 </p>
 
-<%= link_to 'Edit', edit_order_path(@order) %> |
-<%= link_to 'Back', orders_path %>
+<script type="text/javascript">
+  function initMap() {
+    var geocoder = new google.maps.Geocoder();
+    var orderLocation = document.getElementById('orderLocation').value
+
+    geocoder.geocode({
+      address: orderLocation
+    }, function(results, status) {
+      if (status !== 'OK') {
+        alert('Failed: ' + status);
+        return;
+      }
+      console.log(orderLocation);
+      // results[0].geometry.location
+      if (results[0]) {
+        new google.maps.Map(target, {
+          center: results[0].geometry.location,
+          zoom: 15
+        });
+      } else {
+        alert('No results found');
+        return;
+      }
+    });
+
+    // var orderLocation = {lat: 35.681167, lng: 139.767052};
+    //
+    // var map = new google.maps.Map(document.getElementById('map'), {
+    //   zoom: 15,
+    //   center: orderLocation
+    // });
+    //
+    // var marker = new google.maps.Marker({
+    //     position: orderLocation,
+    //     map: map,
+    // });
+  }
+</script>
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= Rails.application.credentials.google_map_key %>&callback=initMap">
+</script>
+
+<style type="text/css">
+  #map { height: 400px;
+    margin-left:auto;
+    margin-right:auto;
+    text-align:left;
+    width: 80%;}
+</style>
+
+<% if driver_signed_in? %>
+  <%= link_to("受注", orders_contract_path(@order)) %>
+<% end %>
+<!-- <%= link_to 'Edit', edit_order_path(@order) %> |
+<%= link_to 'Back', orders_path %> -->
+
+<div id="map"></div>
