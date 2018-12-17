@@ -15,6 +15,6 @@
 <% @past_orders.each do |past_order| %>
   <%= link_to(past_order.date_time, order_path(past_order.id)) %>
   <%= link_to(past_order.location, order_path(past_order.id)) %>
-  <%= link_to(past_order.driver.name, driver_show_path(past_order.driver.id)) %>
+  <%= link_to(past_order.driver.name, driver_path(past_order.driver.id)) %>
   <br>
 <% end %>

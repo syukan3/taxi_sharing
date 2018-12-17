@@ -13,9 +13,11 @@
 
   <div class="field">
     <%= form.label :location %>
-    <!-- <%= form.text_field :location, id:"center" %> -->
     <%= form.text_field :location, id:"center", size:"50" %>
   </div>
+
+  <%= form.hidden_field :lat, id:"center_lat" %>
+  <%= form.hidden_field :lng, id:"center_lng" %>
 
   <div class="field">
     <%= form.label :date_time %>

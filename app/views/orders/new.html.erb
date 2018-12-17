@@ -4,7 +4,7 @@
 
 <%= link_to 'Back', orders_path %>
 
-<%= image_tag('/marker2.png', :id=>"mark") %>
+<!-- <%= image_tag('/marker2.png', :id=>"mark") %> -->
 
 <div id="map"></div>
 
@@ -29,8 +29,8 @@
 
         map.addListener( "center_changed", function ( argument ) {
           var centerPosition = map.getCenter();
-          // document.getElementById('center_lan').value = centerPosition.lat();
-          // document.getElementById('center_lng').value = centerPosition.lng();
+          document.getElementById('center_lat').value = centerPosition.lat();
+          document.getElementById('center_lng').value = centerPosition.lng();
 
           for (var i = 0; i < markers.length; i++) {
             markers[i].setMap(null);

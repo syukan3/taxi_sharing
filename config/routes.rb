@@ -4,12 +4,14 @@ Rails.application.routes.draw do
   devise_for :passengers
 
   get "/" => "home#top"
-  get "/orders/contract" => "orders#contract"
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   resources :passengers, only: %i(show)
   resources :drivers, only: %i(show)
-  resources :orders, only: %i(index create new update edit destroy contract)
+  resources :orders, only: %i(index create new update edit destroy) do
+    get 'contract', on: :member
+  end
 
 
 

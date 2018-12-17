@@ -1,6 +1,8 @@
 
 <p>
-  <strong>Location:</strong><div id="orderLocation"><%= @order.location %></div>
+  <strong>Location:</strong>
+  <%= @order.location %>
+  <div id="latlng" data-lat="<%= @order.lat %>" data-lng="<%= @order.lng %>"></div>
 </p>
 
 <p>
@@ -22,40 +24,20 @@
 
 <script type="text/javascript">
   function initMap() {
-    var geocoder = new google.maps.Geocoder();
-    var orderLocation = document.getElementById('orderLocation').value
+    var lat = Number(document.getElementById("latlng").dataset.lat);
+    var lng = Number(document.getElementById("latlng").dataset.lng);
 
-    geocoder.geocode({
-      address: orderLocation
-    }, function(results, status) {
-      if (status !== 'OK') {
-        alert('Failed: ' + status);
-        return;
-      }
-      console.log(orderLocation);
-      // results[0].geometry.location
-      if (results[0]) {
-        new google.maps.Map(target, {
-          center: results[0].geometry.location,
-          zoom: 15
-        });
-      } else {
-        alert('No results found');
-        return;
-      }
+    var orderLocation = {lat: lat, lng: lng};
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 15,
+      center: orderLocation
     });
 
-    // var orderLocation = {lat: 35.681167, lng: 139.767052};
-    //
-    // var map = new google.maps.Map(document.getElementById('map'), {
-    //   zoom: 15,
-    //   center: orderLocation
-    // });
-    //
-    // var marker = new google.maps.Marker({
-    //     position: orderLocation,
-    //     map: map,
-    // });
+    var marker = new google.maps.Marker({
+        position: orderLocation,
+        map: map,
+    });
   }
 </script>
 
@@ -71,9 +53,14 @@
     width: 80%;}
 </style>
 
-<% if driver_signed_in? %>
-  <%= link_to("受注", orders_contract_path(@order)) %>
+<% if driver_signed_in? && !@order.driver_id.present? %>
+  <%= link_to("受注", contract_order_path(@order)) %>
+<% elsif passenger_signed_in? %>
+
+<% else %>
+  <p>受注済み</p>
 <% end %>
+
 <!-- <%= link_to 'Edit', edit_order_path(@order) %> |
 <%= link_to 'Back', orders_path %> -->
 

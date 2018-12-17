@@ -7,6 +7,7 @@
 <% @orders.each do |order| %>
   <%= link_to(order.date_time, order_path(order.id)) %>
   <%= link_to(order.location, order_path(order.id)) %>
+  <br>
 <% end %>
 <br>
 <h3>・Past Orders</h3>
@@ -14,4 +15,5 @@
   <%= link_to(past_order.date_time, order_path(past_order.id)) %>
   <%= link_to(past_order.location, order_path(past_order.id)) %>
   <%= link_to(past_order.passenger.name, passenger_show_path(past_order.passenger.id)) %>
+  <br>
 <% end %>

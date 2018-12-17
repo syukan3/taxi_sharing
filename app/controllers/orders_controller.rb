@@ -1,11 +1,11 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
-  
+
   def contract
     @order = Order.find_by(id: params[:id])
     @order.driver_id = current_driver.id
     @order.save
-    # redirect_to("/users/#{@user.id}")
+    redirect_to(order_path(@order))
   end
 
   # GET /orders
@@ -76,6 +76,6 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:location, :date_time, :passenger_id, :driver_id)
+      params.require(:order).permit(:location, :date_time, :passenger_id, :driver_id, :lat, :lng)
     end
 end
