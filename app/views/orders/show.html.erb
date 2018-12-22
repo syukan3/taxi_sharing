@@ -1,0 +1,67 @@
+
+<p>
+  <strong>Location:</strong>
+  <%= @order.location %>
+  <div id="latlng" data-lat="<%= @order.lat %>" data-lng="<%= @order.lng %>"></div>
+</p>
+
+<p>
+  <strong>Date time:</strong>
+  <%= @order.date_time %>
+</p>
+
+<p>
+  <strong>Passenger:</strong>
+  <%= @order.passenger.name %>
+</p>
+
+<p>
+  <strong>Driver:</strong>
+  <% if @order.driver_id %>
+    <%= @order.driver.name %>
+  <% end %>
+</p>
+
+<script type="text/javascript">
+  function initMap() {
+    var lat = Number(document.getElementById("latlng").dataset.lat);
+    var lng = Number(document.getElementById("latlng").dataset.lng);
+
+    var orderLocation = {lat: lat, lng: lng};
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 15,
+      center: orderLocation
+    });
+
+    var marker = new google.maps.Marker({
+        position: orderLocation,
+        map: map,
+    });
+  }
+</script>
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= Rails.application.credentials.google_map_key %>&callback=initMap">
+</script>
+
+<style type="text/css">
+  #map { height: 400px;
+    margin-left:auto;
+    margin-right:auto;
+    text-align:left;
+    width: 80%;}
+</style>
+
+<% if driver_signed_in? && !@order.driver_id.present? %>
+  <%= link_to("受注", contract_order_path(@order)) %>
+<% elsif passenger_signed_in? %>
+
+<% else %>
+  <p>受注済み</p>
+<% end %>
+
+<!-- <%= link_to 'Edit', edit_order_path(@order) %> |
+<%= link_to 'Back', orders_path %> -->
+
+<div id="map"></div>

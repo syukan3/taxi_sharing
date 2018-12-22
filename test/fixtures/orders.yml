@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  location: MyString
+  date_time: 2018-11-27 20:19:47
+  passenger_id: 1
+  driver_id: 1
+
+two:
+  location: MyString
+  date_time: 2018-11-27 20:19:47
+  passenger_id: 1
+  driver_id: 1

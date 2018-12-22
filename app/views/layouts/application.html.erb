@@ -10,6 +10,52 @@
   </head>
 
   <body>
+
+    <% if passenger_signed_in? %>
+      <br>
+      <%= link_to "トップ", "/" %> |
+      <%= link_to "注文", new_order_path %> |
+      <%= link_to "マイページ", passenger_path(current_passenger.id) %> |
+      <%= link_to "プロフィール変更", edit_passenger_registration_path %> |
+      <%= link_to "ログアウト", destroy_passenger_session_path, method: :DELETE %>
+      <div id="login">Logged in as : <strong><%= current_passenger.email %></strong>.</div>
+
+    <% elsif driver_signed_in? %>
+      <%= link_to "トップ", "/" %> |
+      <%= link_to "マイページ", driver_path(current_driver.id) %> |
+      <%= link_to "プロフィール変更", edit_driver_registration_path %> |
+      <%= link_to "ログアウト", destroy_driver_session_path, method: :DELETE %>
+      <div id="login">Logged in as : <strong><%= current_driver.email %></strong>.</div>
+
+    <% else %>
+      <br>
+      Passenger:
+      <%= link_to "ユーザー登録", new_passenger_registration_path %> |
+      <%= link_to "ログイン", new_passenger_session_path %>
+      &ensp;&ensp;&ensp;&ensp;
+      Driver:
+      <%= link_to "ユーザー登録", new_driver_registration_path %> |
+      <%= link_to "ログイン", new_driver_session_path %>
+    <% end %>
+
+    <% if driver_signed_in? %>
+      <br>
+      <div class="head">
+        <div class="head-left">
+        </div>
+        <div class="head-right">
+        </div>
+      </div>
+    <% else %>
+      <br>
+      <div class="head-right">
+      </div>
+    <% end %>
+
+
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
     <%= yield %>
   </body>
 </html>
